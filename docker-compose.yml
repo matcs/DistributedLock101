@@ -1,0 +1,34 @@
+﻿version: "3"
+
+services:
+  distributedlock:
+    image: distributedlock
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 5
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: '50M'
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - distributedlock.db
+      
+  distributedlock.db:
+    image: mysql:8.0
+    restart: always
+    hostname: dentistreservation.db
+    environment:
+      MYSQL_DATABASE: 'DistributedLockDatabase'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass@word123!@#'
+      MYSQL_ROOT_PASSWORD: 'pass@word123!@#'
+    ports:
+      - 3306:3306
+    expose:
+      - 3306     

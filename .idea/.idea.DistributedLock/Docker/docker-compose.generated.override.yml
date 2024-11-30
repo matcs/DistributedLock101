@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  distributedlock:
+    build:
+      context: "/home/matheuscosta/RiderProjects/DistributedLock"
+      dockerfile: "Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/DistributedLock.dll"
+    environment:
+      DOTNET_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "distributedlock:dev"
+    ports: []
+    volumes:
+    - "/home/matheuscosta/.nuget/packages:/home/app/.nuget/packages"
+    - "/home/matheuscosta/RiderProjects/DistributedLock:/app:rw"
+    - "/home/matheuscosta/RiderProjects/DistributedLock:/src:rw"
+    working_dir: "/app"
